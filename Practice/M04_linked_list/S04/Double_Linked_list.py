@@ -48,13 +48,45 @@ class Double_LL:
         while current.next.next:
             current = current.next
         current.next = None
+    def delete_at_position(self, position):
+        if not self.head:
+            print("List is empty")
+            return None
+        
+        if position == 1:
+            self.head = self.head.next
+            if self.head:
+                self.head.prev = None 
+            return self.head
+        
+        current = self.head
+        for i in range(1, position):
+            if not current:
+                print("Position out of range")
+                return self.head
+            current = current.next
+        
+        if not current or not current.next:
+            print("Position out of range")
+            return self.head
+        
+        current.prev.next = current.next
+        current.next.prev = current.prev
+        return self.head
+        
     def traverse(self):
         curr = self.head
         while curr:
             print(curr.data, end=" <-> ")
             curr = curr.next
         print("None")
-
+    def count_nodes(self):
+        count = 0
+        current = self.head
+        while current:
+            count += 1
+            current = current.next
+        return count
 dll = Double_LL()
 dll.insert_at_begin(10)
 dll.insert_at_begin(20)
@@ -67,3 +99,6 @@ dll.delete_begin()
 dll.traverse()
 dll.delete_end()
 dll.traverse()
+dll.delete_at_position(2)
+dll.traverse()
+print("Totel nodes:",dll.count_nodes())
